@@ -21,7 +21,7 @@ area.bodyParts
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100dvh;
 }
 
 /*the checkbox behavior must be like a row*/
