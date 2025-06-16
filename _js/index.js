@@ -1,9 +1,8 @@
 $(document).ready(function () {
     var image = $('img');
     var selectedItems = []
-    $('#selections').html( selectedItems.length>0 ?"<b>Selected body Parts: </b>"+ selectedItems : "<b>Please select a body part</b>" );
 
-    var defaultDipTooltip = '<b><u>Spine</u></b>';
+    const areas = ["cavada-completo", "pierna-izquierda-frontal", "pierna-derecha-frontal", "pierna-izquierda-trasera", "pierna-derecha-trasera", "rostro", "axilas", "axilas-2", "torax", "espalda-completa", "abdomen", "genitales", "media-pierna-der-frontal", "media-pierna-izq-frontal", "media-pierna-der-trasera", "media-pierna-izq-trasera"]
 
     image.mapster(
         {
@@ -18,133 +17,91 @@ $(document).ready(function () {
             mapKey: 'name',
             listKey: 'key',
             onClick: function (e) {
-                var newToolTip = defaultDipTooltip;
                 if($.inArray(e.key,selectedItems) >= 0){
                     selectedItems.splice($.inArray(e.key, selectedItems),1);
                 }else{
                     selectedItems.push(e.key);
                 }
-                $('#selections').html( selectedItems.length);
-                $('#selections').html( selectedItems.length>0 ?"<b>Selected body Parts: </b>"+ selectedItems.toString().replace(new RegExp('_', 'g')," ").replace(new RegExp(',', 'g'),", ") : "<b>Please select a body part</b>" );
-
             },
             showToolTip: true,
             toolTipClose: ["tooltip-click", "area-click"],
-            areas: [
-                {
-                    name: "12",
-                    key: "12",
-                    selected:true,
+            areas: areas.map(area => {
+                return {
+                    key: area,
                     strokeColor: "FFFFFF"
-                },{
-                    key: "head",
-                    selected:true,
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "neck",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "right_shoulder",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "left_shoulder",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "chest",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "abdominal",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "pelvis",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "hip",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "left_femur_thigh",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "right_femur_thigh",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "left_knee",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "right_knee",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "right_tib_fib",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "left_fib_tib",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "left_ankle",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "right_ankle",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "right_foot",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "left_foot",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "right_humerus",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "right_elbow",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "right_forearm",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "right_wrist",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "right_hand",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "left_hand",
-                    strokeColor: "ABCDEF"
-                },                {
-                    key: "left_wrist",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "left_forearm",
-                    strokeColor: "FFACDF"
-                },                {
-                    key: "left_elbow",
-                    strokeColor: "FFFAAF"
-                },                {
-                    key: "left_humerus",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "skul_brain",
-                    strokeColor: "FFFFFF"
-                },                {
-                    key: "spine",
-                    strokeColor: "FFFFFF"
-                },
-            ]
-
+                }
+            })
         });
-
-    const radios = document.querySelectorAll('input[name="radios"]');
-    radios.forEach(radio => {
-        radio.addEventListener('change', () => {
-            if (radio.checked) {
-                console.log(`Selected: ${radio.value}`);
-
-            }
-        });
-    });
 
     document.getElementsByName('body-part-checkbox').forEach(checkbox => {
         checkbox.addEventListener('change', (e) => {
-            document.getElementById('id_' + e.target.value).click();
+            const checkboxId = e.target.value;
+            const bodyPart = checkListBodyParts[checkboxId];
+            bodyPart.body_parts.forEach(part => {
+                document.getElementById('id_' + part).click()
+            })
+            if(e.target.checked) {
+                selectedItems.push(checkboxId);
+            }
+            else{
+                selectedItems.splice($.inArray(checkboxId, selectedItems),1);
+            }
+
+            const precio = selectedItems.reduce((total, item) => {
+                return total + (checkListBodyParts[item] ? checkListBodyParts[item].price : 0);
+            }, 0);
+
+            document.getElementById('price').innerHTML = precio;
         });
     })
+
+    const checkListBodyParts = {
+        'cavado_completo': {
+            'body_parts': ['cavado-completo'],
+            'checkbox': 'cavado-completo',
+            'price' : 10000
+        },
+        'pierna_entera': {
+            'body_parts': ['pierna-izquierda-frontal', 'pierna-derecha-frontal', 'pierna-izquierda-trasera', 'pierna-derecha-trasera'],
+            'checkbox': 'pierna-entera',
+            'price' : 20000
+        },
+        'media_pierna': {
+            'body_parts': ['media-pierna-der-frontal', 'media-pierna-izq-frontal', 'media-pierna-der-trasera', 'media-pierna-izq-trasera'],
+            'checkbox': 'media-pierna',
+            'price' : 15000
+        },
+        'rostro_completo': {
+            'body_parts': ['rostro'],
+            'checkbox': 'rostro-completo',
+            'price' : 5000
+        },
+        'axilas': {
+            'body_parts': ['axilas'],
+            'checkbox': 'axilas',
+            'price' : 2000
+        },
+        'torax': {
+            'body_parts': ['torax'],
+            'checkbox': 'torax',
+            'price' : 8000
+        },
+        'espalda_completa': {
+            'body_parts': ['espalda-completa'],
+            'checkbox': 'espalda-completa',
+            'price' : 8000
+        },
+        'abdomen' : {
+            'body_parts': ['abdomen'],
+            'checkbox': 'abdomen',
+            'price' : 6000
+        },
+        'genitales' : {
+            'body_parts': ['genitales'],
+            'checkbox': 'genitales',
+            'price' : 3000
+        }
+    }
+
+
 });

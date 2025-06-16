@@ -2,6 +2,13 @@
     border-color: black;
     fill: #72B8FC;cursor: pointer;
 }
+
+#img-body {
+    width: auto;
+    height: 100vh;
+    zoom: 20%
+}
+
 area.bodyParts
 {
     fill: black;
