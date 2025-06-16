@@ -16,13 +16,6 @@ $(document).ready(function () {
             singleSelect: false,
             mapKey: 'name',
             listKey: 'key',
-            onClick: function (e) {
-                if($.inArray(e.key,selectedItems) >= 0){
-                    selectedItems.splice($.inArray(e.key, selectedItems),1);
-                }else{
-                    selectedItems.push(e.key);
-                }
-            },
             showToolTip: true,
             toolTipClose: ["tooltip-click", "area-click"],
             areas: areas.map(area => {

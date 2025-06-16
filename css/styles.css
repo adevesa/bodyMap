@@ -45,7 +45,14 @@ area.bodyParts:hover
 }
 
 #titulo{
-    font-family: 'Lato', sans-serif;
     margin-left: 10%;
     margin-right: 10%;
+}
+
+/* use a cool checkbox style */
+input[type=checkbox] {
+}
+
+body {
+    font-family: 'Lato', sans-serif;
 }
