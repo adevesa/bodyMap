@@ -5,7 +5,6 @@
 
 #img-body {
     width: auto;
-    height: 100vh;
     zoom: 20%
 }
 
@@ -19,7 +18,7 @@ area.bodyParts
 
 .container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -43,4 +42,10 @@ area.bodyParts
 area.bodyParts:hover
 {
     stroke:black;
+}
+
+#titulo{
+    font-family: 'Lato', sans-serif;
+    margin-left: 10%;
+    margin-right: 10%;
 }

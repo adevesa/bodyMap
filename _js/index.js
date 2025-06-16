@@ -2,7 +2,7 @@ $(document).ready(function () {
     var image = $('img');
     var selectedItems = []
 
-    const areas = ["cavada-completo", "pierna-izquierda-frontal", "pierna-derecha-frontal", "pierna-izquierda-trasera", "pierna-derecha-trasera", "rostro", "axilas", "axilas-2", "torax", "espalda-completa", "abdomen", "genitales", "media-pierna-der-frontal", "media-pierna-izq-frontal", "media-pierna-der-trasera", "media-pierna-izq-trasera"]
+    const areas = ["cavada-completo", "pierna-izquierda-frontal", "pierna-derecha-frontal", "pierna-izquierda-trasera", "pierna-derecha-trasera", "rostro", "torax", "espalda-completa", "abdomen", "genitales", "media-pierna-der-frontal", "media-pierna-izq-frontal", "media-pierna-der-trasera", "media-pierna-izq-trasera", "axila-izquierda", "axila-derecha", "axila-izquierda-back", "axila-derecha-back"]
 
     image.mapster(
         {
@@ -77,7 +77,7 @@ $(document).ready(function () {
             'price' : 5000
         },
         'axilas': {
-            'body_parts': ['axilas'],
+            'body_parts': ['axila-izquierda', 'axila-derecha', 'axila-izquierda-back', 'axila-derecha-back'],
             'checkbox': 'axilas',
             'price' : 2000
         },
